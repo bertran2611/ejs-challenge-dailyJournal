@@ -3,17 +3,13 @@
 <h1>Home</h1>
 <p><%= homeStartingContent %></p>
 
-<!-- there is two difrent code for same purpose but the second one is simpler For Loop and ForEach -->
-<!-- 
-<% for( let i = 0; i < postsVar.length; i++ ) { %>
-    <h1><%= postsVar[i].title %></h1>
-    <p><%= postsVar[i].content %></p>
-<% } %> -->
 
 <% postsVar.forEach(pV => { %>
-    <h1><%= pV.title %> </h1>
-    <p><%= pV.content %></p>
+        <h1><%= pV.title %> </h1>
+        <p style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><%= pV.content %></p>
+        <a href="posts/<%= pV.title %> ">Continue Reading...</a>
+    
 <% }) %>
 
 
-<!-- <%- include('partials/footer') %>  -->
+<%- include('partials/footer') %> 

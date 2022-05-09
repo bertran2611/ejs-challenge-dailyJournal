@@ -55,18 +55,29 @@ app.post('/compose', function (req, res) {
 })
 
 app.get('/posts/:postName', (req, res) => {
-  const requestedTitle = req.params.postName
+  const requestedTitle = _.lowerCase(req.params.postName)
 
-  for (let i = 0; i < posts.length; i++) {
+  posts.forEach(post => {
+    const storedTitle = _.lowerCase(post.title)
+    
+    if (storedTitle === requestedTitle){
+      res.render('post',{
+        postsVar : post
+      })
+    } 
+  });
 
-    if (posts[i].title == requestedTitle){
-      console.log('match found!');
-      break
-    } else{
-      console.log('not found');
-      break
-    }
-  }
+  // for (let i = 0; i < posts.length; i++) {
+  //   const storedTitle = _.lowerCase(posts[i].title)
+
+  //   if (storedTitle == requestedTitle){
+  //     console.log('match found!');
+  //     break
+  //   } else{
+  //     console.log('not found');
+  //     break
+  //   }
+  // }
   
 })
 
