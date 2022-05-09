@@ -10,20 +10,28 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+const _ = require('lodash')
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+// global var 
+let posts = []
+
 app.get('/', (req, res) => {
   res.render('home', {
-    homeStartingContent : homeStartingContent
+    homeStartingContent : homeStartingContent,
+    postsVar : posts
   })
+  
 })
+
 
 app.get('/about', (req, res) => {
   res.render('about', {
-    aboutContent : aboutContent
+    abContent : aboutContent
   })
 })
 
@@ -42,9 +50,25 @@ app.post('/compose', function (req, res) {
     title : req.body.postTitle,
     content : req.body.postBody
   }
-  
+  posts.push(post)
+  res.redirect('/')
 })
 
+app.get('/posts/:postName', (req, res) => {
+  const requestedTitle = req.params.postName
+
+  for (let i = 0; i < posts.length; i++) {
+
+    if (posts[i].title == requestedTitle){
+      console.log('match found!');
+      break
+    } else{
+      console.log('not found');
+      break
+    }
+  }
+  
+})
 
 
 app.listen(3000, function() {
